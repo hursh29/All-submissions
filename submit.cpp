@@ -1,4 +1,4 @@
-// ###### Sat Mar 28 14:19:29 IST 2020
+// 3/31/2020 6:24:39 PM
 #include <bits/stdc++.h>  
 #include <ext/pb_ds/tree_policy.hpp>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -19,47 +19,10 @@
 using namespace std ; 
 using namespace __gnu_pbds;
 typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set ; 
-const int N = 2e5+7;
-vector <vector <int>> adj(N);
-int tests(){ 
-  // 3/30/2020 6:49:44 PM
-  // We will use codeforces api and download a JSON file
-  int n ;
-  int ans = 0 ;
-  cin >> n; 
-  ll i,j; 
-  string s[n];
-  vector <int> v(32,0);
-  forn(i,0,n){ 
-      cin >> s[i];
-      int num = 0 ; 
-      for(char c : s[i])
-        switch(c){
-          case 'a' :  num |= (1<<0);
-                      break ;
+const int N = 2e5+7; 
+int tests(){
 
-          case 'i' :  num |= (1<<1);
-                      break ;
-        
-          case 'e' :  num |= (1<<2);
-                      break ;
-        
-          case 'o' :  num |= (1<<3);
-                      break ;
-                    
-          case 'u' :  num |= (1<<4);
-        }
-      v[num] += 1 ;
-  } 
-  forn(i,0,32)  
-    forn(j,0,32)
-        if( ( num < 31 || j < 31) && (num|j) == 31)
-          ans += (ll)v[j];
-        
-  ans += (ll)(v[31]*(v[31]-1));
-  ans  >>= 1 ; 
-  cout << ans << '\n';
-  return 0 ;
+  return 0;
 } 
 int32_t main(){
     I__O ;            
