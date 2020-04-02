@@ -17,35 +17,40 @@
 #define in                 insert
 #define all(x)             (x).begin(),(x).end() 
 using namespace std ; 
+// 2020-04-01
 // using namespace __gnu_pbds;
 // typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set ; 
-const int N = 2e5+7;  
-int tests() { 
-  int k,t,i ;
-  cin >> k  ;
-  if(!k){
-    cout << 1 <<' ' << 1 << '\n' << 2020 << '\n';
-    return 0 ;
+const int N = 2e5+7; 
+ll a,b ; 
+bool poss(ll x){
+  if( b > x)
+    return false; 
+  if((a/x)&1)
+    return x-b == a%x;
+  else
+    return a%x == b;
+}
+int32_t tests() {
+  ll a,b; 
+  cin >>a  >> b ; 
+  ll L = 1 ,R = b,mid ;
+  ll ans  = -1;
+  while(L <= R){
+    mid  = L+(R-L)/2;
+    if(poss(mid))
+    {
+      ans  = mid ;
+      R = mid-1;
+    }
+    else
+      L = mid+1;
   }
-  t = k ;
-  int c = 0 ;
-  while(t){
-    t >>= 1 ;
-    c++ ;
-  }   
-  int best= 0 ;
-  forn(i,0,c)
-    best |= (1<<i);
-  int big = best;
-  int opp = best-k;
-  opp |= (1<<(c));
-  int also = 0 ;
-  also |= (1<<(c));
-  big <<= 1;
-  big |= 1 ;
-  cout << 2 << ' ' << 3 << '\n' ;
-  cout << big << ' ' << best<< ' ' << opp << '\n';
-  cout << also << ' ' << big << ' ' << best << '\n';
+  cout << ans  << '\n' ; 
+  // auto f=[&](int u){
+  //       for (int i=2;i<=u;++i){
+  //           if (u%i==0) return i;
+  //       }
+  //   };
   return 0;
 } 
 int32_t main(){
