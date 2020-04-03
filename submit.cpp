@@ -1,7 +1,7 @@
-// 3/31/2020 6:24:39 PM
+// 4/3/2020 1:53:12 AM
 #include <bits/stdc++.h>  
-// #include <ext/pb_ds/tree_policy.hpp>
-// #include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/pb_ds/assoc_container.hpp>
 #define forn(i,a,b)        for( i = a ; i < b  ; i++ )
 #define debug(x)           cout << #x << " " << x << " -- \n"
 #define I__O               ios::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
@@ -18,42 +18,56 @@
 #define all(x)             (x).begin(),(x).end() 
 using namespace std ; 
 // 2020-04-01
-// using namespace __gnu_pbds;
-// typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set ; 
-const int N = 2e5+7; 
-ll a,b ; 
-bool poss(ll x){
-  if( b > x)
-    return false; 
-  if((a/x)&1)
-    return x-b == a%x;
-  else
-    return a%x == b;
+using namespace __gnu_pbds;
+typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set ; 
+const int N = 2e5+7;   
+int days[N],req[N],n,m;
+bool poss(int day){
+  int c = 0 ;
+  bool ok = true ; 
+  vector <bool> done(day+1,false),fine(m+1,false);
+  for(int i = day ;i > 0 ; i--)
+    if(!fine[days[i]] && days[i])
+      done[i] = fine[days[i]] =  true;
+  int extra = 0,prev= 0 ;
+ 
+  for( int i = 1 ;i <= day ; i++ )
+    if(done[i]) 
+      {
+
+        int total = extra+i-1-prev;
+        if(req[days[i]] > total)
+          return false ;
+        extra += total-req[days[i]];
+        prev = i ;
+      } 
+  for(int i = 1 ;i <= m ; i ++ )
+    ok &= fine[i];
+
+  return ok ;   
 }
-int32_t tests() {
-  ll a,b; 
-  cin >>a  >> b ; 
-  ll L = 1 ,R = b,mid ;
-  ll ans  = -1;
+int tests() {
+  cin >> n >> m ;
+  int i;
+  forn(i,0,n)
+    cin >> days[i+1];
+  forn(i,0,m)
+    cin >> req[i+1];  
+  int L = 1,R = n,mid ;
+  int ans  = -1 ;
   while(L <= R){
-    mid  = L+(R-L)/2;
-    if(poss(mid))
-    {
-      ans  = mid ;
+    mid = (L+R)/2;
+    if(poss(mid)){
       R = mid-1;
+      ans = mid;
     }
     else
       L = mid+1;
-  }
-  cout << ans  << '\n' ; 
-  // auto f=[&](int u){
-  //       for (int i=2;i<=u;++i){
-  //           if (u%i==0) return i;
-  //       }
-  //   };
+  }  
+  cout << ans  << '\n' ;
   return 0;
 } 
-int32_t main(){
+int main(){
     I__O ;            
     int cases = 1 ; 
     // cin >> cases ;  
