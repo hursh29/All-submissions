@@ -1,7 +1,7 @@
 // 4/3/2020 1:53:12 AM
 #include <bits/stdc++.h>  
-#include <ext/pb_ds/tree_policy.hpp>
-#include <ext/pb_ds/assoc_container.hpp>
+// #include <ext/pb_ds/tree_policy.hpp>
+// #include <ext/pb_ds/assoc_container.hpp>
 #define forn(i,a,b)        for( i = a ; i < b  ; i++ )
 #define debug(x)           cout << #x << " " << x << " -- \n"
 #define I__O               ios::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
@@ -18,54 +18,39 @@
 #define all(x)             (x).begin(),(x).end() 
 using namespace std ; 
 // 2020-04-01
-using namespace __gnu_pbds;
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set ; 
-const int N = 2e5+7;   
-int days[N],req[N],n,m;
-bool poss(int day){
-  int c = 0 ;
-  bool ok = true ; 
-  vector <bool> done(day+1,false),fine(m+1,false);
-  for(int i = day ;i > 0 ; i--)
-    if(!fine[days[i]] && days[i])
-      done[i] = fine[days[i]] =  true;
-  int extra = 0,prev= 0 ;
- 
-  for( int i = 1 ;i <= day ; i++ )
-    if(done[i]) 
-      {
-
-        int total = extra+i-1-prev;
-        if(req[days[i]] > total)
-          return false ;
-        extra += total-req[days[i]];
-        prev = i ;
-      } 
-  for(int i = 1 ;i <= m ; i ++ )
-    ok &= fine[i];
-
-  return ok ;   
-}
+// using namespace __gnu_pbds;
+// typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set ; 
+const int N = 2e5+7;
+bool ok(string A){
+  int N = A.size();
+  // N--;
+  int i = 0; 
+  while(i < N/2 && A[i] == A[N-1-i])
+    i++;
+  return (i == N/2);  
+}     
 int tests() {
-  cin >> n >> m ;
-  int i;
-  forn(i,0,n)
-    cin >> days[i+1];
-  forn(i,0,m)
-    cin >> req[i+1];  
-  int L = 1,R = n,mid ;
-  int ans  = -1 ;
-  while(L <= R){
-    mid = (L+R)/2;
-    if(poss(mid)){
-      R = mid-1;
-      ans = mid;
+  string  s ;
+  cin >> s; 
+  int i,n = s.length();
+  forn(i,-1,n){ 
+    string s_ ;
+    int j ; 
+    forn(j,0,26){
+      s_ = s.substr(0,i+1);   
+      s_.push_back('a'+j);
+
+      s_ += s.substr(i+1,n-i-1);
+      cout << s_ << '\n' ;
+      if(ok(s_))
+      {
+        cout << s_ << '\n' ;
+        return 0;
+      }
     }
-    else
-      L = mid+1;
-  }  
-  cout << ans  << '\n' ;
-  return 0;
+    }  
+  cout << "NA\n" ; 
+  return 0;  
 } 
 int main(){
     I__O ;            
